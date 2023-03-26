@@ -12,10 +12,6 @@ import 'login_page.dart';
 
 class RegisterPage extends ConsumerStatefulWidget {
 
-
-  RegisterPage({super.key});
-
-
   @override
   ConsumerState<RegisterPage> createState() => _RegisterPageState();
 }

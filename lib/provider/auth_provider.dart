@@ -39,7 +39,6 @@ class AuthProvider extends StateNotifier<UserState>{
     response.fold(
             (l){
               state = state.copyWith(isLoad: false, isError: true, isSuccess: false, errMessage: l, user: []);
-
             },
             (r) {
               state = state.copyWith(isLoad: false, isError: false, isSuccess: true, errMessage: '', user: [r]);

@@ -48,12 +48,28 @@ class Home extends ConsumerWidget {
                           onTap: (){
                             Get.to(()=>ProductDetail(product: data[index]),transition: Transition.leftToRightWithFade);
                           },
-                          child: GridTile(child:
-                          CachedNetworkImage(
-                            errorWidget: (context, url, error) => const Center(child: Text('no image')),
-                            imageUrl: data[index].image,
-                            placeholder: (context,url)=> const Center(child: Text('Loading...'),),
-                          ),
+                          child: Container(
+                            color: Colors.grey,
+                            child: Column(
+                              children: [
+                                CachedNetworkImage(
+                                  errorWidget: (context, url, error) => const Center(child: Text('no image')),
+                                  imageUrl: data[index].image,
+                                  placeholder: (context,url)=> const Center(child: Text('Loading...'),),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Flexible(child: Text(data[index].product_name,
+                                        style: TextStyle(overflow: TextOverflow.ellipsis, fontSize: 16.sp, fontWeight: FontWeight.w600),)),
+                                      Text('Rs. ${data[index].price.toString()}'),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),

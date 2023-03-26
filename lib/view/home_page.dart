@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:shop_app/view/cart.dart';
 import 'package:shop_app/view/pages/home.dart';
 import 'package:shop_app/view/pages/profile.dart';
 
@@ -22,7 +23,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   static List<Widget> _widgetOptions = <Widget>[
     Home(),
     Center(child: Text('cart',style: optionStyle,)),
-    Center(child: Text('hjk',style: optionStyle,)),
+    CartPage(),
     ProfilePage(),
   ];
 

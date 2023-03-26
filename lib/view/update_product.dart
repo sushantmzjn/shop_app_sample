@@ -49,7 +49,7 @@ class _CreateProductState extends ConsumerState<UpdateProduct> {
         SnackShow.showFailure(context, next.errMessage);
       }else if(next.isSuccess){
         ref.invalidate(productShow);
-        Get.off(()=> HomePage());
+        Get.offAll(()=> HomePage());
         SnackShow.showSuccess(context, 'Successful');
       }
     });

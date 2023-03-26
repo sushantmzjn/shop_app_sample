@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:shop_app/model/product.dart';
+import 'package:shop_app/provider/cart_provider.dart';
 import 'package:shop_app/provider/product_provider.dart';
+import 'package:shop_app/view/cart.dart';
 import 'package:shop_app/view/common_widget/custom_button.dart';
 import 'package:shop_app/view/common_widget/snackbar.dart';
 import 'package:shop_app/view/home_page.dart';
@@ -26,7 +28,7 @@ class ProductDetail extends ConsumerWidget {
         SnackShow.showFailure(context, next.errMessage);
       }else if(next.isSuccess){
         ref.invalidate(productShow);
-        Get.off(()=> HomePage());
+        Get.offAll(()=> HomePage());
         SnackShow.showSuccess(context, 'Success');
       }
     });
@@ -34,6 +36,7 @@ class ProductDetail extends ConsumerWidget {
 
     final delete = ref.watch(productProvider);
     final auth = ref.watch(authProvider);
+    final cart  = ref.watch(cartProvider);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -69,10 +72,8 @@ class ProductDetail extends ConsumerWidget {
               Get.to(()=> UpdateProduct(productData: product,));
             }, text: 'Update'),
 
-
             //delete
             CustomButton(onTap: (){
-
               showModalBottomSheet(
                   shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(top: Radius.circular(10.0))),
@@ -135,12 +136,17 @@ class ProductDetail extends ConsumerWidget {
                     );
                   });
 
-              // ref.read(productProvider.notifier).deleteProduct(
-              //     productId: product.public_id,
-              //     publicId: product.public_id,
-              //     token: auth.user[0].token
-              // );
             }, text: 'Delete'),
+
+            //add to cart
+            CustomButton(onTap: (){
+              final response =ref.read(cartProvider.notifier).add(product);
+              if(response == 'no'){
+                Get.snackbar('Alert', 'already add to cart', duration:  const Duration(seconds: 2 ));
+              }else{
+                Get.snackbar('Alert', response, duration:  const Duration(seconds:2));
+              }
+            }, text:  'Add To Cart')
           ],
         ),
       ),
